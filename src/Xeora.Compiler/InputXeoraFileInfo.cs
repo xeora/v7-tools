@@ -13,6 +13,8 @@ namespace Xeora.Extension.Tools
                 this.RegistrationPath.Replace(domainPath, string.Empty);
             this.RegistrationPath = 
                 this.RegistrationPath.Replace(fI.Name, string.Empty);
+            this.RegistrationPath =
+                this.RegistrationPath.Replace("/", "\\");
             this.FileName = fI.Name;
 
             this.FullFilePath = fullFilePath;
