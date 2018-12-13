@@ -12,7 +12,6 @@ namespace Xeora.Extension.Tools
 
         private string _DomainPath;
         private List<InputXeoraFileInfo> _XeoraFiles;
-        private byte[] _SecuredPasswordHash = null;
 
         public Compiler(string domainPath)
         {
@@ -20,8 +19,7 @@ namespace Xeora.Extension.Tools
             this._XeoraFiles = new List<InputXeoraFileInfo>();
         }
 
-        public byte[] PasswordHash =>
-            this._SecuredPasswordHash;
+        public byte[] PasswordHash { get; private set; }
 
         public void AddFile(string fullFilePath) =>
             this._XeoraFiles.Add(new InputXeoraFileInfo(this._DomainPath, fullFilePath));
@@ -215,10 +213,10 @@ namespace Xeora.Extension.Tools
 
                 byte[] FileHash = 
                     md5.ComputeHash(outputStream);
-                this._SecuredPasswordHash = new byte[FileHash.Length];
+                this.PasswordHash = new byte[FileHash.Length];
 
                 for (int hC = 0; hC < FileHash.Length; hC++)
-                    this._SecuredPasswordHash[hC] = (byte)(FileHash[hC] ^ passwordHash[hC]);
+                    this.PasswordHash[hC] = (byte)(FileHash[hC] ^ passwordHash[hC]);
             }
         }
     }
